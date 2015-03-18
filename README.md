@@ -4,6 +4,8 @@
 
 Transforms objects describing paths into arrays of paths.
 
+**NOTE:** Currently this module does not have any checks or protections against (1) cycles in a graph, and (2) stack overflows. Please use it only if you have control of the data enough to know that none of these issues will be a problem.
+
 ## Installation
 
 ```javascript
