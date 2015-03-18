@@ -1,0 +1,36 @@
+{
+  "name": "get-object-paths",
+  "version": "0.0.1",
+  "description": "Transforms objects describing paths into arrays of paths.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run lint && npm run unit",
+    "lint": "./node_modules/.bin/eslint .",
+    "unit": "./node_modules/.bin/mocha test/spec.index.js --require test/helpers.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebinsua/get-object-paths.git"
+  },
+  "keywords": [
+    "graph",
+    "object",
+    "paths",
+    "routes",
+    "trails",
+    "walks",
+    "helper",
+    "steps"
+  ],
+  "author": "Seb Insua <me@sebinsua.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sebinsua/get-object-paths/issues"
+  },
+  "homepage": "https://github.com/sebinsua/get-object-paths",
+  "devDependencies": {
+    "chai": "^2.1.2",
+    "eslint": "^0.17.1",
+    "mocha": "^2.2.1"
+  }
+}
