@@ -28,10 +28,10 @@ var appendValueToChain = function (arr) {
 var createPathFinder = function (options) {
   options = options || {};
   var get = options.get || getValue;
-  var transform = options.transform || identity;
+  var represent = options.represent || identity;
 
   return function getPaths(obj, key) {
-    var arr = [transform(key, obj)];
+    var arr = [represent(key, obj)];
 
     var value = get(obj, key), values = [];
     if (value) {

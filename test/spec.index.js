@@ -124,7 +124,7 @@ describe('get-object-paths', function () {
           }
           return next;
         },
-        transform: function pathToStepIdentifier(key, o) {
+        represent: function pathToStepIdentifier(key, o) {
           var step = o[key];
           return step.stepIdentifier;
         }
