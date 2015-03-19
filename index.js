@@ -23,9 +23,12 @@ var callWithKey = function (fn, col) {
   };
 };
 
-var appendValueToChain = function (arr) {
+var appendDefinedValueToChain = function (arr) {
   return function (value) {
-    return arr.concat(value);
+    if (value !== undefined) {
+      return arr.concat(value);
+    }
+    return arr;
   };
 };
 
@@ -44,7 +47,8 @@ var createPathFinder = function (options) {
     col = col || {};
     key = key !== null ? key : '';
 
-    var arr = [id(getValueOrKey(col, key))];
+    var el = id(getValueOrKey(col, key));
+    var arr = el !== undefined ? [el] : [];
 
     var value = to(get(col, key)), values = [];
     if (value) {
@@ -52,7 +56,7 @@ var createPathFinder = function (options) {
       return flatten(
         values.map(callWithKey(getPaths, col))
       ).map(
-        appendValueToChain(arr)
+        appendDefinedValueToChain(arr)
       );
     } else {
       return arr;
