@@ -1,6 +1,6 @@
 {
   "name": "get-object-paths",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Transforms objects describing paths into arrays of paths.",
   "main": "index.js",
   "scripts": {
