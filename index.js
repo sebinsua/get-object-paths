@@ -31,7 +31,7 @@ var appendValueToChain = function (arr) {
 
 var createPathFinder = function (options) {
   options = options || {};
-  
+
   var get = options.get || getValue;
   var to = options.to || identity;
   var id = options.id || identity;
