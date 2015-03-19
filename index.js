@@ -4,8 +4,12 @@ var identity = function (value) {
   return value;
 };
 
-var getValue = function (obj, key) {
-  return obj[key];
+var getValue = function (col, key) {
+  return col[key];
+};
+
+var getKey = function (col, key) {
+  return key;
 };
 
 var flatten = function (arrs) {
@@ -13,9 +17,9 @@ var flatten = function (arrs) {
   return empty.concat.apply(empty, arrs);
 };
 
-var callWithKey = function (fn, obj) {
+var callWithKey = function (fn, col) {
   return function (key) {
-    return fn(obj, key);
+    return fn(col, key);
   };
 };
 
@@ -27,17 +31,26 @@ var appendValueToChain = function (arr) {
 
 var createPathFinder = function (options) {
   options = options || {};
+  
   var get = options.get || getValue;
-  var represent = options.represent || identity;
+  var to = options.to || identity;
+  var id = options.id || identity;
+  var getValueOrKey = getKey;
+  if (options.id) {
+    getValueOrKey = get;
+  }
 
-  return function getPaths(obj, key) {
-    var arr = [represent(key, obj)];
+  return function getPaths(col, key) {
+    col = col || {};
+    key = key !== null ? key : '';
 
-    var value = get(obj, key), values = [];
+    var arr = [id(getValueOrKey(col, key))];
+
+    var value = to(get(col, key)), values = [];
     if (value) {
       values = [].concat(value);
       return flatten(
-        values.map(callWithKey(getPaths, obj))
+        values.map(callWithKey(getPaths, col))
       ).map(
         appendValueToChain(arr)
       );

@@ -38,6 +38,114 @@ describe('get-object-paths', function () {
 
   });
 
+  describe('for a simple array using indexes', function () {
+
+    var arr, startPath;
+    beforeEach(function () {
+      arr = [
+        {
+          id: 'a',
+          to: 1
+        },
+        {
+          id: 'b',
+          to: 3
+        },
+        {
+          id: 'c',
+          to: 4
+        },
+        {
+          id: 'd',
+          to: 2
+        },
+        {
+          id: 'e'
+        }
+      ];
+      startPath = 0;
+    });
+
+    it('should be able to find paths', function () {
+      var findPaths = createPathFinder({
+        to: function toTo(el) {
+          var to;
+          if (el && el.to) {
+            to = el.to;
+          }
+          return to;
+        },
+        id: function representId(el) {
+          return el && el.id;
+        }
+      });
+      var simplePaths = findPaths(arr, startPath);
+      simplePaths.should.deep.equal([
+        ['a', 'b', 'd', 'c', 'e']
+      ]);
+    });
+
+  });
+
+  describe('for a simple array without using indexes', function () {
+
+    var arr, startPath;
+    beforeEach(function () {
+      arr = [
+        {
+          id: 'a',
+          to: 'b'
+        },
+        {
+          id: 'b',
+          to: 'd'
+        },
+        {
+          id: 'c',
+          to: 'e'
+        },
+        {
+          id: 'd',
+          to: 'c'
+        },
+        {
+          id: 'e'
+        }
+      ];
+      startPath = 'a';
+    });
+
+    it('should be able to find paths', function () {
+      var findPaths = createPathFinder({
+        get: function getById(col, key) {
+          var el;
+          for (var i = 0; i < col.length; i++) {
+            if (col[i].id === key) {
+              el = col[i];
+              break;
+            }
+          }
+          return el;
+        },
+        to: function toTo(el) {
+          var to;
+          if (el && el.to) {
+            to = el.to;
+          }
+          return to;
+        },
+        id: function representId(el) {
+          return el && el.id;
+        }
+      });
+      var simplePaths = findPaths(arr, startPath);
+      simplePaths.should.deep.equal([
+        ['a', 'b', 'd', 'c', 'e']
+      ]);
+    });
+
+  });
+
   describe('for a complex object', function () {
 
     var obj, startPath;
@@ -114,8 +222,7 @@ describe('get-object-paths', function () {
       };
 
       var findNexts = createPathFinder({
-        get: function getPath(o, key) {
-          var step = o[key];
+        to: function toPath(step) {
           var next;
           if (step && step.next) {
             next = step.next;
@@ -124,8 +231,7 @@ describe('get-object-paths', function () {
           }
           return next;
         },
-        represent: function pathToStepIdentifier(key, o) {
-          var step = o[key];
+        id: function pathToStepIdentifier(step) {
           return step.stepIdentifier;
         }
       });

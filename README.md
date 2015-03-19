@@ -43,8 +43,10 @@ var simplePaths = getObjectPaths(obj, startPath);
 // ]
 ```
 
-The module has a single options argument which you can use to pass in `options.get` and `options.represent`.
+The module has a single options argument which you can use to pass in `options.get`, `options.to` and `options.represent`.
 
-`options.get` is meant to return the nodes a node points to. It accepts a function with this signature `(obj, key)`.
+`options.get` is meant to return the nodes a key points to. It accepts a function with this signature `(col, key)`.
 
-`options.represent` is meant to convert between the key of a node and a representation of the node (e.g. an identifier). It accepts a function with this signature `(key, obj)`.
+`options.to` is mean to return the nodes a key points to. It accepts the node and can return any of its properties.
+
+`options.id` is meant to convert between the key of a node and a representation of the node (e.g. an identifier). It accepts a function with this signature `(el)`.
